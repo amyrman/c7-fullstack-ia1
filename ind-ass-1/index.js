@@ -1,6 +1,13 @@
 // TODO:
 // ----------------------------------------------------
 // - MAKE ALGORITHM FUNCTION WORK
+
+  // Problem as of now (date?):
+  // First 'L' gives wrong result, but the problem is that it's actually right according to the rule. So, what are viable options to solve this? Can the rule be changed? Iterate through "output" array and validate the results, and correct any that are 'wrong'? Or, if we later get to the same letter, a special rule gets applied that changes earlier result of same letter?
+
+    // pseudo for 2nd pass:
+    // if (output.result for this letter, i.e. guessArr[i] = correct && same letter occurs earlier && output.result for that letter is misplaced) <then> {change result for that letter -> incorrect}
+
 // - MODULE: MOVE COMPARE FUNCTION TO SEPARATE FILE AND EXPORT
 // - IMPORT INTO INDEX.JS
 // - TESTING
@@ -15,6 +22,7 @@
 //     - L / incorrect (eftersom det redan finns ett korrekt L)
 //     - L / correct
 //     - Å / incorrect
+
 //     - TEST WITH SOME OTHER WORDS, E.G. "HALLÅ"-"ILLER",  "SPIRA"- "PROPP"
 // ----------------------------------------------------
 
