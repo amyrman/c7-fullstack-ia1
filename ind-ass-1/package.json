@@ -1,0 +1,19 @@
+{
+  "name": "ind-ass-1",
+  "version": "1.0.0",
+  "description": "Course 7 - JS Fullstack - Individual Assignment 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/amyrman/lernia-edu-websysdev.git"
+  },
+  "author": "Anders Myrman <amyhrman@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amyrman/lernia-edu-websysdev/issues"
+  },
+  "homepage": "https://github.com/amyrman/lernia-edu-websysdev#readme"
+}
