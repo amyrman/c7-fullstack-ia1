@@ -1,111 +1,99 @@
-// TODO:
 // ----------------------------------------------------
-// - MAKE ALGORITHM FUNCTION WORK
-
-  // Problem as of now (date?):
-  // First 'L' gives wrong result, but the problem is that it's actually right according to the rule. So, what are viable options to solve this? Can the rule be changed? Iterate through "output" array and validate the results, and correct any that are 'wrong'? Or, if we later get to the same letter, a special rule gets applied that changes earlier result of same letter?
-
-    // pseudo for 2nd pass:
-    // if (output.result for this letter, i.e. guessArr[i] = correct && same letter occurs earlier && output.result for that letter is misplaced) <then> {change result for that letter -> incorrect}
-
+// TODO and problem definition:
+// ----------------------------------------------------
+// - Get compare function working i.e. give correct results in correct order
+// ----------------------------------------------------
 // - MODULE: MOVE COMPARE FUNCTION TO SEPARATE FILE AND EXPORT
 // - IMPORT INTO INDEX.JS
-// - TESTING
+// ----------------------------------------------------
+// - Notes about TESTING
+//  - Från lektion 220314
+//   - TESTSTRATEGI
+//    - Två strategier nämns:
+//      - Att tänka ut och skriva flertalet tester och försöka skriva en funktion som checkar av dem.
+//      - Att skriva ett test och klara det -> ytterligare ett test och klara det, etc.
+//    - Att ett sätt att koda funktionaliteten till slut inte fungerar när andra krav ställs på funktionaliteten ska inte ses som ett misslyckande, utan då genom tester är det ett sätt att definiera olika aspekter av funktionaliteten, typ hårdkoda input till 'a' snarare än guess[i]... Det handlar om att ändra implementationen
+
+//    - Vad behöver jag ha för tester för att kontrollera att min kod verkligen fungerar som förväntat?
+//    - Vilka tester ger mig INTE någonting?
+//      - T ex kontrollera om åttaåringen kan addition.
+//      - 1: Fråga: "Kan du addition?" Ja/nej -- Detta är ett dåligt test eftersom det inte alls kontrollerar om åttaåringen faktiskt kan addition
+
+//    - Utifrån vad jag inte behöver, vad behöver jag för grundläggande strategi, det vill säga typ frågeställningar?
+
+//    - Ett test kan pga slumpen ge rätt svar och därför kan ett test behöva kompletteras med flera tester (eller ytterligare  testlogik?) Med andra ord kan flera frågor behöver ställas, flera test behöver köras, för att minska risken för att testsviten felaktigt godkänner koden (eller egentligen checkedLetters).
+//    - Ett krav är att jag ger något och får något tillbaka, och kan kontrollera om jag fick det jag förväntade mig.
+//    - Det handlar, i fallet med åttaåring och addition, om att jag utifrån min kunskap, i det här fallet om matematik, försöker formulera frågor som ger vettiga svar i fråga om problemet -- sådana som faktiskt riktar in sig på att täcka in det som är relevant -- i fallet med att kontrollera för addition kanske ställa frågorna: "Vad är 1 + 1?" - Förväntat svar: "2". | Tveksamt om det är tillräckligt, kan ha varit flyt, så därför: "Vad är 3 + 4?", förväntat svar: "7".
+
+// TODO: cont'd
 //   - Create test strategy
 //   - Create separate test-file
 //   - Check Jest-documentation
 //   - Document the test strategy with comments in test-code
 //   - Create 2+ tests that verifies the compareFunction
-//     - IF INPUT IS "CYKLA, HALLÅ", THEN OUTPUT IS EXPECTED TO BE:
+//     - IF INPUT IS "CYKLA, HALLÅ", THEN checkedLetters IS EXPECTED TO BE:
 //     - H / incorrect
 //     - A / misplaced
 //     - L / incorrect (eftersom det redan finns ett korrekt L)
 //     - L / correct
 //     - Å / incorrect
 
-//     - TEST WITH SOME OTHER WORDS, E.G. "HALLÅ"-"ILLER",  "SPIRA"- "PROPP"
+//     - TEST WITH SOME OTHER answers, E.G. "HALLÅ"-"ILLER",  "SPIRA"- "PROPP"
 // ----------------------------------------------------
 
-// Assignment 1: Algorithm A
-// An algorithm, function(s), that defines rules for feedback when player tries to guess what the correct word is.
+function feedback(correctWord, guessWord) {
 
-  // Define the problem:
-  // CONTEXT:
-  // The user needs to come up with a word and needs to know how close the word is to the correct one
-  // WHEN the user makes a guess (input)
-  // THEN the user gets feedback (output) about how the guess compares to the correct answer
-
-function compareStrings(answer, guess) {
-
-  const answerArr = answer.split("");
-  const guessArr = guess.split("");
-  const output = [];
+  const checkedLetters = [...Array(5)];
+  
+  guessWord = guessWord.toUpperCase();
+  correctWord = correctWord.toUpperCase();
 
   // Log for exec order clarity
-  console.log(`\nAnswer array: ${answerArr}`);
-  console.log(`Guess array:  ${guessArr}`);
+  console.log(`\nCorrect: ${correctWord}`);
+  console.log(`Guess:   ${guessWord}`);
 
-  // The strings need to be looped through or similar i.e. with .map, forEach, for, or some string method? And for every index the value (letter) needs to be checked
-  for (let i = 0; i < answerArr.length; i++) {
+  const letterCounter = {}; //keep track of correctLetter frequency
 
-    if (guessArr[i] === answerArr[i]) {
+  // first pass: if the correctLetter has been counted, i.e. is present in counter object, then just add 1 to the count (or value key) (the first iteration will always give false and thus skip to else and thus first add 1 to all non-counted letters?
 
-      // Log for clarifying exec order in console
-      console.log(`\n${guessArr[i]} is CORRECT - pushing to output...`);
+  for (let i = 0; i < correctWord.length; i++) {
 
-      // Push to (insert in) output array -- needs to be at same index
-      output.push({"letter": guessArr[i], "result": "correct"});
+    let correctLetter = correctWord[i];
+    let guessLetter = guessWord[i];
 
-      // Problem when splicing:
-      // Everything after 'correct' gets spliced
-      // Solution: Add "+1" OUTSIDE the "[]"
-
-      // Splice (delete) iterated letters
-      // guessArr.splice([i], 1);
-      // answerArr.splice([i], 1);
-
-      // If splicing: log arrays w/ msg for exec order clarity 
-      // console.log(`Answer array is now: ${answerArr}`);
-      // console.log(`Guess array is now:  ${guessArr}`);
-
-    } else if (guessArr[i] !== answerArr[i] && answerArr.includes(guessArr[i])) {
-
-        // Log for clarifying exec order in console
-        console.log(`\n${guessArr[i]} is MISPLACED - pushing to output...`);
-
-        // Push to (insert in) output array -- needs to be at same index
-        output.push({"letter": guessArr[i], "result": "misplaced"});
-
-        // Splice (delete) iterated letters
-        // guessArr.splice([i], 1);
-        // answerArr.splice([i], 1);
-
-        // If splicing: log arrays for exec order clarity 
-        // console.log(`Answer array is now: ${answerArr}`);
-        // console.log(`Guess array is now:  ${guessArr}`);
-
-      } else {
-
-      // Log for clarifying exec order in console
-      console.log(`\n${guessArr[i]} is INCORRECT - pushing to output...`);
-      output.push({"letter": guessArr[i], "result": "incorrect"})
-
-      //     guessArr.splice([i], 1);
-      //     answerArr.splice([i], 1);
-
-      // console.log(`Answer array is now: ${answerArr}`);
-      // console.log(`Guess array is now:  ${guessArr}`);
+    if (letterCounter[correctLetter]) {
+      letterCounter[correctLetter] += 1;
+    } 
+    else {
+      letterCounter[correctLetter] = 1;
     }
   }
-  console.log("\nOutput array: ");
-  console.log(output);
+  console.log(letterCounter);
 
+    //first pass, check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up" -- how get in right index though? make empty array w/ index based on word length?
+  for (let i = 0; i < correctWord.length; i++) {
+
+    let correctLetter = correctWord[i];
+    let guessLetter = guessWord[i];
+
+    if (guessLetter == correctLetter) { // is the letter same char and index
+      letterCounter[correctLetter] -= 1;
+      checkedLetters.push({letter: guessLetter, result: 'correct'});
+    }
+  }
+
+  for (let i = 0; i < correctWord.length; i++) {
+
+    let correctLetter = correctWord[i];
+    let guessLetter = guessWord[i];
+
+    if (!checkedLetters.includes("correct")) {
+      if (correctWord.includes(guessLetter) && letterCounter[guessLetter] > 0) {
+      checkedLetters.push({letter: guessLetter, result: 'misplaced'});
+      } else { checkedLetters.push({letter: guessLetter, result: 'incorrect'}); }
+    }
+  }
+  console.log(checkedLetters);
 }
 
-// Call function to test if correct works
-// compareStrings("CYKLA", "CYKLA");
-
-// Differing guess-answer combinations
-compareStrings("CYKLA", "HALLÅ");
-// compareStrings("HALLÅ", "ILLER");
-// compareStrings("SPIRA", "PROPP");
+feedback('cykla', 'hallå');
