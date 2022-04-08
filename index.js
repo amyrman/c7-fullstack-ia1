@@ -88,7 +88,7 @@ function feedback(correctWord, guessWord) {
     let guessLetter = guessWord[i];
 
     if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct"
-      if (correctWord.includes(guessLetter) && letterCounter[guessLetter] > 0) {
+      if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0) {
       checkedLetters.push({letter: guessLetter, result: 'misplaced'});
       } else { checkedLetters.push({letter: guessLetter, result: 'incorrect'}); }
     }
@@ -98,4 +98,4 @@ function feedback(correctWord, guessWord) {
 
 feedback('cykla', 'hallå');
 
-// shouldn't it work with just adding correct ones in correct pos maybe with map or filter
+// shouldn't it work with just adding correct ones in correct pos maybe with map or filter?
