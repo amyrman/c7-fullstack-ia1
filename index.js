@@ -54,12 +54,10 @@ function feedback(correctWord, guessWord) {
 
   const letterCounter = {}; //keep track of correctLetter frequency
 
-  // first pass: if the correctLetter has been counted, i.e. is present in counter object, then just add 1 to the count (or value key) (the first iteration will always give false and thus skip to else and thus first add 1 to all non-counted letters?
-
+  // first pass: if the correctLetter has been counted, i.e. is present in counter object, then just add 1 to the count (or object value, really) (the first iteration will always give false and thus skip to else and thus first add 1 to all non-counted letters?)
   for (let i = 0; i < correctWord.length; i++) {
 
     let correctLetter = correctWord[i];
-    let guessLetter = guessWord[i];
 
     if (letterCounter[correctLetter]) {
       letterCounter[correctLetter] += 1;
@@ -70,7 +68,7 @@ function feedback(correctWord, guessWord) {
   }
   console.log(letterCounter);
 
-    //first pass, check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up" -- how get in right index though? make empty array w/ index based on word length?
+  //second pass: check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up"
   for (let i = 0; i < correctWord.length; i++) {
 
     const correctLetter = correctWord[i];
@@ -83,6 +81,7 @@ function feedback(correctWord, guessWord) {
     }
   }
 
+  //third pass: ignore already iterated correct letters, mark misplaced and incorrect
   for (let i = 0; i < correctWord.length; i++) {
 
     const correctLetter = correctWord[i];
@@ -94,10 +93,8 @@ function feedback(correctWord, guessWord) {
         addToChecked('misplaced');
       } else { addToChecked('incorrect') }
     }
-  } // use indexOf answer + splice it to that indexOf pos in checkedLetters to add letters to correct index pos?
+  }
   console.log(checkedLetters);
 }
 
 feedback('cykla', 'hallå');
-
-// shouldn't it work with just adding correct ones in correct pos maybe with map or filter?
