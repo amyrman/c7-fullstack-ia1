@@ -73,8 +73,8 @@ function feedback(correctWord, guessWord) {
     //first pass, check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up" -- how get in right index though? make empty array w/ index based on word length?
   for (let i = 0; i < correctWord.length; i++) {
 
-    let correctLetter = correctWord[i];
-    let guessLetter = guessWord[i];
+    const correctLetter = correctWord[i];
+    const guessLetter = guessWord[i];
 
     if (guessLetter == correctLetter) { // is the letter same char and index
       letterCounter[correctLetter] -= 1;
@@ -84,8 +84,8 @@ function feedback(correctWord, guessWord) {
 
   for (let i = 0; i < correctWord.length; i++) {
 
-    let correctLetter = correctWord[i];
-    let guessLetter = guessWord[i];
+    const correctLetter = correctWord[i];
+    const guessLetter = guessWord[i];
 
     if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct"
       if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0) {
