@@ -75,10 +75,11 @@ function feedback(correctWord, guessWord) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
+    const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) };
 
-    if (guessLetter == correctLetter) { // is the letter same char and index
-      letterCounter[correctLetter] -= 1;
-      checkedLetters.push({letter: guessLetter, result: 'correct'});
+    if (guessLetter == correctLetter) { // is the letter same char and index?
+      letterCounter[correctLetter] -= 1; // then subtract from letterCounter
+      addToChecked('correct'); // and add to checkedLetters
     }
   }
 
@@ -86,11 +87,12 @@ function feedback(correctWord, guessWord) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
+    const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) };
 
     if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct"
       if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0) {
-      checkedLetters.push({letter: guessLetter, result: 'misplaced'});
-      } else { checkedLetters.push({letter: guessLetter, result: 'incorrect'}); }
+        addToChecked('misplaced');
+      } else { addToChecked('incorrect') }
     }
   } // use indexOf answer + splice it to that indexOf pos in checkedLetters to add letters to correct index pos?
   console.log(checkedLetters);
