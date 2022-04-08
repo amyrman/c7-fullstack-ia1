@@ -88,13 +88,23 @@ function feedback(correctWord, guessWord) {
     const guessLetter = guessWord[i];
     const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) };
 
-    if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct"
-      if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0) {
-        addToChecked('misplaced');
-      } else { addToChecked('incorrect') }
+    // if (!checkedLetters.some(result => result.letter == correctLetter)) {
+    // if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct", need to pinpoint correct ones?
+      if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0)
+      { addToChecked('misplaced'); }
+      // else if (!checkedLetters.some(result => result.letter == correctLetter) && letterCounter[correctLetter] > 0)
+      else if (!correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0)
+      { addToChecked('incorrect') } // this overwrites 'correct' ones, so needs to ignore 'correct' 
     }
+    console.log(checkedLetters);
   }
-  console.log(checkedLetters);
-}
 
-feedback('cykla', 'hallå');
+feedback('hallå', 'iller');
+// feedback('propp', 'spira')
+
+// DESPERATE REFLECTIONZZZ:
+// feedback works with cykla, hallå, but addToChecked breaks with other words e.g. propp, spira | iller, hallå, etc.. and I think it's in addToChecked?
+// for checkedLetters correct
+// if the result of the checkedLetter already is correct, then don't overwrite it
+// maybe something needs to change in addToChecked?? like, ignore it if its already correct
+// maybe 'undefined' type that messes things up?
