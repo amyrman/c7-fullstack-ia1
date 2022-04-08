@@ -43,7 +43,7 @@
 
 function feedback(correctWord, guessWord) {
 
-  const checkedLetters = [...Array(5)];
+  const checkedLetters = [...Array(correctWord.length)];
   
   guessWord = guessWord.toUpperCase();
   correctWord = correctWord.toUpperCase();
