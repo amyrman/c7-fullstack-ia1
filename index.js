@@ -38,7 +38,7 @@
 //     - L / correct
 //     - Å / incorrect
 
-//     - TEST WITH SOME OTHER answers, E.G. "HALLÅ"-"ILLER",  "SPIRA"- "PROPP"
+//     - Test with more guesses, e.g. "HALLÅ"-"ILLER",  "SPIRA"-"PROPP"
 // ----------------------------------------------------
 
 function feedback(correctWord, guessWord) {
@@ -54,7 +54,7 @@ function feedback(correctWord, guessWord) {
 
   const letterCounter = {}; //keep track of correctLetter frequency
 
-  // first pass: if the correctLetter has been counted, i.e. is present in counter object, then just add 1 to the count (or object value, really) (the first iteration will always give false and thus skip to else and thus first add 1 to all non-counted letters?)
+  // if the correctLetter has been counted, i.e. is present in counter object, then just add 1 to the count (or object value, really) (the first iteration will always give false and thus skip to else and thus first add 1 to all non-counted letters?)
   for (let i = 0; i < correctWord.length; i++) {
 
     let correctLetter = correctWord[i];
@@ -68,11 +68,12 @@ function feedback(correctWord, guessWord) {
   }
   console.log(letterCounter);
 
-  //second pass: check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up"
+  // 1:st pass: check for correct letters, push to checkedLetters and subtract every correct one from the lettercounter -- this is later used to set guessed letter as misplaced if the counter for that correctLetter = 0, because then all the letters in letterCount are "used up"
   for (let i = 0; i < correctWord.length; i++) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
+    // const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) }; // this isn't needed -- instead we can just do this:
     const addToChecked = (result) => { checkedLetters[i] = {letter: guessLetter, result: result} };
 
     if (guessLetter == correctLetter) { // is the letter same char and index?
@@ -81,30 +82,30 @@ function feedback(correctWord, guessWord) {
     }
   }
 
-  //third pass: ignore already iterated correct letters, mark misplaced and incorrect
+  // 2:nd pass: mark 'misplaced' with help of letterCounter, and rest as 'incorrect'
   for (let i = 0; i < correctWord.length; i++) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
+    // const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) }; // this isn't needed -- instead we can just do this:
     const addToChecked = (result) => { checkedLetters[i] = ({letter: guessLetter, result: result}) };
 
     // if (!checkedLetters.some(result => result.letter == correctLetter)) {
     // if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct", need to pinpoint correct ones?
-      if (correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0)
-      { addToChecked('misplaced'); }
+      if (correctWord.includes(guessLetter) && letterCounter[guessLetter] > 0)
+      { addToChecked('misplaced');
+        letterCounter[guessLetter] -= 1
       // else if (!checkedLetters.some(result => result.letter == correctLetter) && letterCounter[correctLetter] > 0)
-      else if (!correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0)
-      { addToChecked('incorrect') } // this overwrites 'correct' ones, so needs to ignore 'correct' 
+      // else if (!correctWord.includes(guessLetter) && letterCounter[correctLetter] > 0)
+      } else if (!checkedLetters[i])
+      { addToChecked('incorrect') }
     }
     console.log(checkedLetters);
   }
 
-feedback('hallå', 'iller');
-// feedback('propp', 'spira')
+// feedback('hallå', 'iller');
+feedback('spira', 'propp')
+// feedback('cykla', 'hallå')
 
-// DESPERATE REFLECTIONZZZ:
-// feedback works with cykla, hallå, but addToChecked breaks with other words e.g. propp, spira | iller, hallå, etc.. and I think it's in addToChecked?
-// for checkedLetters correct
-// if the result of the checkedLetter already is correct, then don't overwrite it
-// maybe something needs to change in addToChecked?? like, ignore it if its already correct
-// maybe 'undefined' type that messes things up?
+// Reflections...
+// what was actually wrong with addToChecked with splice, except for it being fantastically complicated?
