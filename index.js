@@ -73,7 +73,7 @@ function feedback(correctWord, guessWord) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
-    const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) };
+    const addToChecked = (result) => { checkedLetters[i] = {letter: guessLetter, result: result} };
 
     if (guessLetter == correctLetter) { // is the letter same char and index?
       letterCounter[correctLetter] -= 1; // then subtract from letterCounter
@@ -86,7 +86,7 @@ function feedback(correctWord, guessWord) {
 
     const correctLetter = correctWord[i];
     const guessLetter = guessWord[i];
-    const addToChecked = (result) => { checkedLetters.splice(correctWord.indexOf(correctLetter), 1, ({letter: guessLetter, result: result})) };
+    const addToChecked = (result) => { checkedLetters[i] = ({letter: guessLetter, result: result}) };
 
     // if (!checkedLetters.some(result => result.letter == correctLetter)) {
     // if (!checkedLetters.includes("correct")) { // trying to add functionality to ignore "correct", need to pinpoint correct ones?
