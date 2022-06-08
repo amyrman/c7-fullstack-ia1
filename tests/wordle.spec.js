@@ -1,5 +1,6 @@
-import feedback from '../index.js'
+import feedback from '../feedback.js'
 
+// Test incorrect checks
 test('a - b -> incorrect', () => {
   const result = feedback("a", "b");
   console.log(result);
@@ -8,6 +9,7 @@ test('a - b -> incorrect', () => {
   ]);
 });
 
+// Test correct checks with several letters
 test('abc - abc -> correct, correct, correct', () => {
   const result = feedback("abc", "abc");
   console.log(result);
@@ -18,6 +20,7 @@ test('abc - abc -> correct, correct, correct', () => {
   ]);
 });
 
+//Test case insensitivity
 test('a - A -> correct', () => {
   const result = feedback("a", "A");
   console.log(result);
@@ -26,6 +29,7 @@ test('a - A -> correct', () => {
   ]);
 });
 
+//Test case insensitivity
 test('A - a -> correct', () => {
   const result = feedback("A", "a");
   console.log(result);
