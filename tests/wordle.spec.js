@@ -1,35 +1,35 @@
-import compareStrings from '../index.js'
+import feedback from '../index.js'
 
 test('a - b -> incorrect', () => {
-  const result = compareStrings("a", "b");
+  const result = feedback("a", "b");
   console.log(result);
   expect(result).toEqual([
-    { letter: 'A', result: "incorrect" },
+    { letter: "A", result: "incorrect" },
   ]);
 });
 
 test('abc - abc -> correct, correct, correct', () => {
-  const result = compareStrings("abc", "abc");
+  const result = feedback("abc", "abc");
   console.log(result);
   expect(result).toEqual([
-    { letter: 'A', result: "correct" },
-    { letter: 'B', result: "correct" },
-    { letter: 'C', result: "correct" },
+    { letter: "A", result: "correct" },
+    { letter: "B", result: "correct" },
+    { letter: "C", result: "correct" },
   ]);
 });
 
 test('a - A -> correct', () => {
-  const result = compareStrings("a", "A");
+  const result = feedback("a", "A");
   console.log(result);
   expect(result).toEqual([
-    { letter: 'A', result: "correct" },
+    { letter: "A", result: "correct" },
   ]);
 });
 
 test('A - a -> correct', () => {
-  const result = compareStrings("A", "a");
+  const result = feedback("A", "a");
   console.log(result);
   expect(result).toEqual([
-    { letter: 'A', result: "correct" },
+    { letter: "A", result: "correct" },
   ]);
 });
