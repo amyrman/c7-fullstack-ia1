@@ -1,4 +1,4 @@
-# c7-fullstack-ia1
+# JS fullstack Individual assignment 1
 Lernia Course 7: Fullstack | Individual Assignment 1: wordle algorithm
 
 run tests via "npm test"
